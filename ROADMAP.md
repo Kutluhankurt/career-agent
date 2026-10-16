@@ -25,8 +25,8 @@ Legend: ✅ built and tested · 🟡 built, not verified on that platform/servic
 
 | Item | Status |
 |---|---|
-| Windows | 🟡 code written, not run on Windows yet |
-| macOS | 🟡 code written, not run on macOS yet |
+| Windows | 🟡 all unit + integration tests pass in CI (incl. real background start/stop); not yet used on a real desktop |
+| macOS | 🟡 all unit + integration tests pass in CI (incl. real background start/stop); not yet used on a real desktop |
 | Linux | ✅ X11, platform smoke tests pass |
 | career start / stop / status | ✅ also from the standalone binary |
 | Activity collection · idle detection | ✅ |
