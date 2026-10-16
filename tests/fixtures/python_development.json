@@ -1,0 +1,14 @@
+{
+  "description": "Python work on VersionUpdater with a 2-minute look at another repo: the excursion stays inside.",
+  "date": "2026-10-16",
+  "expected": {"sessions": 1, "label": "VersionUpdater_v2.3"},
+  "events": [
+    ["10:08:00", "window_focus", "VS Code", "version_updater.py — VersionUpdater_v2.3 — Visual Studio Code"],
+    ["10:15:30", "window_focus", "Terminal", "alex@desk: ~/VersionUpdater_v2.3"],
+    ["10:18:00", "window_focus", "VS Code", "main.py — VersionUpdater_v2.3 — Visual Studio Code"],
+    ["10:24:00", "window_focus", "VS Code", "parse.py — logParser_v2 — Visual Studio Code"],
+    ["10:26:00", "window_focus", "VS Code", "xml_generator.py — VersionUpdater_v2.3 — Visual Studio Code"],
+    ["10:40:00", "window_focus", "Terminal", "alex@desk: ~/VersionUpdater_v2.3"],
+    ["10:46:00", "idle_started", null, null]
+  ]
+}

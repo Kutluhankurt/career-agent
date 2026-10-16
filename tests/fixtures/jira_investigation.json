@@ -1,0 +1,13 @@
+{
+  "description": "Supervisor work, then a sustained switch to a Mobile AI bug: two sessions.",
+  "date": "2026-10-16",
+  "expected": {"sessions": 2, "labels": ["supervisor · AI-1842", "MAI-311"]},
+  "events": [
+    ["10:50:00", "window_focus", "Chrome", "AI-1842 Temperature Test - Jira - Google Chrome"],
+    ["10:52:00", "window_focus", "VS Code", "temperature_test.py — supervisor — Visual Studio Code"],
+    ["11:12:00", "window_focus", "Chrome", "MAI-311 Camera freeze on boot - Jira - Google Chrome"],
+    ["11:20:00", "window_focus", "Chrome", "Camera pipeline - Confluence - Google Chrome"],
+    ["11:24:00", "window_focus", "Chrome", "MAI-311 Camera freeze on boot - Jira - Google Chrome"],
+    ["11:38:00", "idle_started", null, null]
+  ]
+}

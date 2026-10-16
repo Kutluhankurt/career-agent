@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("@fontsource-variable/inter/files/inter-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --bg: #f5f5f7; --card: #ffffff; --fill: #e8e8ed; --fill-2: #f0f0f3; --text: #1d1d1f; --muted: #6e6e73; --faint: #a1a1a6;
+  --blue: #0071e3; --blue-text: #0066cc; --green: #248a3d; --orange: #c76a00; --red: #d70015;
+  --bar: rgba(245, 245, 247, 0.72); --hair: rgba(0, 0, 0, 0.08);
+  --p1: #0071e3; --p2: #bf4ad6; --p3: #16a37f; --p4: #e08a00; --p5: #d63a5a; --p6: #5e5ce6; --p7: #7a9a1a; --p8: #8e8e93;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.06); --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.18);
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
+  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000; --card: #1c1c1e; --fill: #2c2c2e; --fill-2: #232325; --text: #f5f5f7; --muted: #a1a1a6; --faint: #6e6e73;
+    --blue: #0a84ff; --blue-text: #2997ff; --green: #30d158; --orange: #ff9f0a; --red: #ff453a;
+    --bar: rgba(22, 22, 23, 0.72); --hair: rgba(255, 255, 255, 0.1);
+    --p1: #0a84ff; --p2: #da8fff; --p3: #30d1a8; --p4: #ff9f0a; --p5: #ff6482; --p6: #7d7aff; --p7: #a6d13a; --p8: #aeaeb2;
+    --shadow: 0 0 0 1px rgba(255, 255, 255, 0.04); --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000; --card: #1c1c1e; --fill: #2c2c2e; --fill-2: #232325; --text: #f5f5f7; --muted: #a1a1a6; --faint: #6e6e73;
+  --blue: #0a84ff; --blue-text: #2997ff; --green: #30d158; --orange: #ff9f0a; --red: #ff453a;
+  --bar: rgba(22, 22, 23, 0.72); --hair: rgba(255, 255, 255, 0.1);
+  --p1: #0a84ff; --p2: #da8fff; --p3: #30d1a8; --p4: #ff9f0a; --p5: #ff6482; --p6: #7d7aff; --p7: #a6d13a; --p8: #aeaeb2;
+  --shadow: 0 0 0 1px rgba(255, 255, 255, 0.04); --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}

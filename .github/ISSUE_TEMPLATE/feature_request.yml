@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest an idea or improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to happen?
+  - type: checkboxes
+    id: principles
+    attributes:
+      label: Fits the project principles
+      options:
+        - label: Works locally, without a mandatory cloud service
+        - label: Doesn't capture keystrokes, screenshots or file contents
+  - type: dropdown
+    id: help
+    attributes:
+      label: Would you like to help build it?
+      options: ["Yes, I'd like to work on it", "Maybe, with some guidance", "No, just suggesting"]

@@ -1,0 +1,19 @@
+{
+  "description": "One coherent Supervisor session: Jira ticket, editor, tests, results, Slack glance.",
+  "date": "2026-10-16",
+  "expected": {"sessions": 1, "label": "supervisor · AI-1842"},
+  "events": [
+    ["09:12:03", "window_focus", "Chrome", "AI-1842 Temperature Test - Jira - Google Chrome"],
+    ["09:14:21", "window_focus", "VS Code", "temperature_test.py — supervisor — Visual Studio Code"],
+    ["09:21:40", "window_focus", "Terminal", "alex@nxp-lab: ~/work/supervisor"],
+    ["09:23:05", "window_focus", "VS Code", "temperature_test.py — supervisor — Visual Studio Code"],
+    ["09:31:47", "window_focus", "Terminal", "alex@nxp-lab: ~/work/supervisor"],
+    ["09:34:10", "window_focus", "Slack", "Slack | #supervisor-team | Acme"],
+    ["09:35:02", "window_focus", "VS Code", "config.yaml — supervisor — Visual Studio Code"],
+    ["09:41:30", "window_focus", "Chrome", "AI-1842 Temperature Test - Jira - Google Chrome"],
+    ["09:44:12", "window_focus", "Excel", "Temperature_Result.xlsx - Excel"],
+    ["09:52:10", "window_focus", "VS Code", "test_supervisor.py — supervisor — Visual Studio Code"],
+    ["10:01:00", "window_focus", "Terminal", "alex@nxp-lab: ~/work/supervisor"],
+    ["10:04:00", "idle_started", null, null]
+  ]
+}

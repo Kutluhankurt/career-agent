@@ -1,0 +1,14 @@
+{
+  "description": "10 min work, 40 min idle, 35 min work on the same project: the idle period splits it.",
+  "date": "2026-10-16",
+  "expected": {"sessions": 2},
+  "events": [
+    ["13:00:00", "window_focus", "VS Code", "parse.py — logParser_v2 — Visual Studio Code"],
+    ["13:06:00", "window_focus", "Terminal", "alex@desk: ~/logParser_v2"],
+    ["13:10:00", "idle_started", null, null],
+    ["13:50:00", "idle_ended", null, null],
+    ["13:50:01", "window_focus", "VS Code", "parse.py — logParser_v2 — Visual Studio Code"],
+    ["14:10:00", "window_focus", "Excel", "device_0412_summary.xlsx - Excel"],
+    ["14:18:00", "agent_stopped", null, null]
+  ]
+}
