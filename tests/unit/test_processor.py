@@ -101,3 +101,17 @@ def test_sleep_gap_becomes_idle():
     assert events[0].timestamp == before
     assert events[0].metadata["reason"] == "suspended"
     assert events[1].timestamp == clock.now
+
+
+def test_spinner_glyphs_do_not_create_new_focus_events():
+    from career.events.processor import clean_title
+
+    assert clean_title("✳ Animasyonlu UI UX planlaması") == "Animasyonlu UI UX planlaması"
+    assert clean_title("⠋ ◐ npm run build") == "npm run build"
+    assert clean_title("● config.yaml — supervisor") == "config.yaml — supervisor"
+    assert clean_title("Ölçüm sonuçları.xlsx") == "Ölçüm sonuçları.xlsx"
+    assert clean_title("~/work — zsh") == "~/work — zsh"
+    assert clean_title("✳") == "✳"
+    events = run([Sample("Gnome-terminal-server", "✳ Task"), Sample("Gnome-terminal-server", "◐ Task"),
+                  Sample("Gnome-terminal-server", "⠙ Task")])
+    assert [e.window_title for e in events] == ["Task"]

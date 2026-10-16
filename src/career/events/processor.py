@@ -32,6 +32,19 @@ _SECRET_PATTERNS = [
 _PRIVATE_TITLE_RE = re.compile(r"(?i)(incognito|inprivate|private browsing|1password|bitwarden|keepass|lastpass|keychain access)")
 
 
+# Spinners and status marks that tools put in front of titles ("✳ Task", "◐ Task", "⠋ npm",
+# "● file.py" for unsaved). They change every second and would turn one window into hundreds
+# of events. Letters (including Turkish ones) and ASCII are never stripped.
+_LEADING_GLYPHS_RE = re.compile(r"^(?:[^\w\s\x00-\x7F]+\s*)+")
+
+
+def clean_title(title: str | None) -> str | None:
+    if not title:
+        return title
+    cleaned = _LEADING_GLYPHS_RE.sub("", title).strip()
+    return cleaned or title
+
+
 def redact(title: str | None) -> str | None:
     if not title:
         return title
@@ -92,7 +105,7 @@ class EventProcessor:
 
     def _focus_event(self, window: ActiveWindow, now: datetime) -> Event | None:
         app = normalize_application(window.application) or normalize_application(window.process)
-        title = redact(window.title)
+        title = redact(clean_title(window.title))
         private = bool(app and app.casefold() in self.excluded_apps) or bool(title and _PRIVATE_TITLE_RE.search(title))
         if private:
             app, title = PRIVATE_APP, None  # time is accounted for, but nothing about it is kept
