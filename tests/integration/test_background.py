@@ -7,7 +7,8 @@ import sys
 
 def career(home, *args):
     env = {**os.environ, "CAREER_AGENT_HOME": str(home.home)}
-    return subprocess.run([sys.executable, "-m", "career", *args], capture_output=True, text=True, env=env, timeout=30)
+    return subprocess.run([sys.executable, "-m", "career", *args], capture_output=True, text=True, env=env, timeout=30,
+                          stdin=subprocess.DEVNULL)
 
 
 def test_start_status_stop(home):

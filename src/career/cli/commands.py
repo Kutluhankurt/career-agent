@@ -65,7 +65,7 @@ def start(foreground: bool) -> None:
     if not foreground and _first_run(paths):
         import sys
 
-        if sys.stdin.isatty():
+        if sys.stdin.isatty() and sys.stdout.isatty():  # only ask when a person is actually at a terminal
             from career.cli import career_cmds
 
             career_cmds.setup()

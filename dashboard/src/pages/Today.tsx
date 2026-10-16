@@ -132,7 +132,7 @@ export default function TodayPage() {
   const weekMax = Math.max(8 * 3600, ...t.week.map((d) => d.active_seconds));
 
   return (
-    <Page eyebrow={formatLongDate(t.date)} title={`${greeting(hour)}${t.name ? `, ${t.name}` : ""}.`} lede={empty ? "Quietly watching. Nothing for you to do." : "Your day so far, understood."}>
+    <Page eyebrow={formatLongDate(t.date)} title={`${greeting(hour)}${t.name ? `, ${t.name}` : ""}.`} lede={!empty ? "Your day so far, understood." : status?.state === "running" ? "Quietly watching. Nothing for you to do." : "Ready when you are."}>
       {status?.state === "paused" && (
         <div className="card banner in">
           <span className="dot still" style={{ background: "var(--orange)" }} aria-hidden />
@@ -161,7 +161,13 @@ export default function TodayPage() {
       )}
 
       {empty ? (
-        <EmptyState title="I'm observing.">Your first sessions will appear here in about 30 minutes.</EmptyState>
+        <div className="gap-below">
+          {status?.state === "running" ? (
+            <EmptyState title="I'm observing.">Your first sessions will appear here in about 30 minutes.</EmptyState>
+          ) : (
+            <EmptyState title="Nothing recorded yet.">Start the agent with <code>career start</code> and your first sessions will appear here.</EmptyState>
+          )}
+        </div>
       ) : (
         <div className="hero in">
           <Hero today={t} />

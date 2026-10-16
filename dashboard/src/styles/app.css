@@ -122,6 +122,7 @@ button.row-cta:hover { transform: scale(1.005); }
 .row-cta .n { width: 44px; height: 44px; flex: none; border-radius: 50%; background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); display: grid; place-items: center; font-weight: 600; }
 .row-cta b { font-weight: 600; display: block; }
 .row-cta > .link { margin-left: auto; white-space: nowrap; }
+.gap-below { margin-bottom: 24px; }
 .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .sk { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; align-items: baseline; margin-bottom: 18px; font-size: 15px; }
 .sk .d { font-size: 13px; color: var(--green); animation: fadein 0.5s 1s both; }
