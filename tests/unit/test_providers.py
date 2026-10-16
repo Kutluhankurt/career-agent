@@ -29,6 +29,7 @@ class Recorder:
 
 
 def claude_with(response):
+    pytest.importorskip("anthropic")  # optional extra: `uv sync --extra claude`
     p = ClaudeProvider(api_key="test")
     rec = Recorder(response)
     p._client = lambda: rec
