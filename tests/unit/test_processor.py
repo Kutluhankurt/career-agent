@@ -55,8 +55,8 @@ def test_idle_start_and_end():
     types = [e.type for e in events]
     assert types == [EventType.WINDOW_FOCUS, EventType.IDLE_STARTED, EventType.IDLE_ENDED, EventType.WINDOW_FOCUS]
     started = events[1]
-    # idle_started is backdated to when input actually stopped
-    assert started.timestamp == datetime(2026, 10, 16, 9, 0, 5, tzinfo=timezone.utc) - timedelta(seconds=400)
+    # backdated to when input stopped, but never before the focus already recorded at 09:00
+    assert started.timestamp == datetime(2026, 10, 16, 9, 0, tzinfo=timezone.utc)
     assert started.metadata["idle_seconds"] == 400
 
 
@@ -115,3 +115,25 @@ def test_spinner_glyphs_do_not_create_new_focus_events():
     events = run([Sample("Gnome-terminal-server", "✳ Task"), Sample("Gnome-terminal-server", "◐ Task"),
                   Sample("Gnome-terminal-server", "⠙ Task")])
     assert [e.window_title for e in events] == ["Task"]
+
+
+def test_idle_is_never_backdated_before_what_was_recorded():
+    """Agent restarted while the user was away: idle starts at the restart, not before it."""
+    collector, clock = MockCollector([Sample("Google-chrome", "Zone Management", idle=13)]), Clock()
+    proc = EventProcessor(collector, clock=clock, idle_threshold=300)
+    first = proc.tick()  # focus recorded at 09:00:00 while input stopped 13 s earlier
+    collector._samples[0] = Sample("Google-chrome", "Zone Management", idle=313)
+    clock.step(300)
+    idle = proc.tick()
+    assert idle[0].type == EventType.IDLE_STARTED
+    assert idle[0].timestamp == first[0].timestamp
+
+
+def test_idle_backdates_to_last_input_after_long_work():
+    collector, clock = MockCollector([Sample("code", "a.py", idle=0)]), Clock()
+    proc = EventProcessor(collector, clock=clock, idle_threshold=300, suspend_gap=10**9)
+    proc.tick()                                   # 09:00 focus
+    clock.step(1800)                              # worked 30 min in the same window
+    collector._samples[0] = Sample("code", "a.py", idle=320)
+    [idle] = proc.tick()
+    assert idle.timestamp == clock.now - timedelta(seconds=320)   # 09:24:40, real last input

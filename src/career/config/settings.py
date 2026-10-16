@@ -29,7 +29,7 @@ class SessionSettings(BaseModel):
     switch_min: float = Field(default=300.0, gt=0, description="A different project must last this long (s) to split")
     min_session: float = Field(default=180.0, ge=0, description="Shorter sessions (s) are merged into a neighbour")
     max_span: float = Field(default=7200.0, gt=0, description="Upper bound (s) for one uninterrupted window focus")
-    rebuild_interval: float = Field(default=300.0, gt=0, description="How often (s) the agent refreshes today's sessions")
+    rebuild_interval: float = Field(default=120.0, gt=0, description="How often (s) the agent refreshes today's sessions")
 
 
 class PrivacySettings(BaseModel):

@@ -113,9 +113,16 @@ class SessionEngine:
     def build_spans(self, events: list[Event], open_until: datetime | None = None) -> list[Span]:
         spans: list[Span] = []
         current: Event | None = None
+        idle = False
         for event in sorted(events, key=lambda e: e.timestamp):
             if event.type != EventType.WINDOW_FOCUS and event.type not in _ENDS_SPAN:
                 continue  # file/git/browser events add context later; they don't move focus
+            if event.type == EventType.IDLE_STARTED:
+                idle = True
+            elif event.type in (EventType.IDLE_ENDED, EventType.AGENT_STARTED):
+                idle = False
+            elif event.type == EventType.WINDOW_FOCUS and idle:
+                continue  # a window that changed while nobody was at the keyboard
             if current is not None:
                 end = event.timestamp
                 if event.type == EventType.AGENT_STARTED:

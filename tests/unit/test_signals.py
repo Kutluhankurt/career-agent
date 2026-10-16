@@ -15,6 +15,7 @@ from career.analysis.signals import extract, extract_files, extract_tickets, ext
         ("PyCharm", "mobilai – test_camera.py", "mobilai"),
         ("Terminal", "alex@nxp-lab: ~/work/supervisor", "supervisor"),
         ("Terminal", "alex@desk: ~", None),
+        ("Terminal", "alex@desk: ~/Work Tracker/career-agent", "career-agent"),
         ("Terminal", r"C:\Users\alex\VersionUpdater_v2.3", "VersionUpdater_v2.3"),
         ("Chrome", "AI-1842 Temperature Test - Jira - Google Chrome", None),
     ],

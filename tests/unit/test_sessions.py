@@ -167,3 +167,17 @@ def test_restart_after_crash_caps_the_last_window():
     ]
     sessions = engine().build(events)
     assert [s.active_seconds for s in sessions] == [300, 1200]
+
+
+def test_window_recorded_during_idle_is_not_work():
+    events = [
+        Event(timestamp=m(0), type=EventType.AGENT_STARTED),
+        focus(m(0), "Chrome", "Zone Management - Google Chrome"),
+        Event(timestamp=m(0), type=EventType.IDLE_STARTED),
+        focus(m(5), "Chrome", "Zone Management - Google Chrome"),   # title refresh while away
+        Event(timestamp=m(20), type=EventType.IDLE_ENDED),
+        focus(m(20), "VS Code", "a.py — supervisor — Visual Studio Code"),
+        Event(timestamp=m(30), type=EventType.AGENT_STOPPED),
+    ]
+    [s] = engine().build(events)
+    assert s.active_seconds == 600

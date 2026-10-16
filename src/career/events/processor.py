@@ -72,6 +72,7 @@ class EventProcessor:
         self.is_idle = False
         self._last_focus: tuple[str | None, str | None] | None = None
         self._last_tick: datetime | None = None
+        self._last_emitted: datetime | None = None
 
     def tick(self) -> list[Event]:
         now = self.clock()
@@ -89,7 +90,12 @@ class EventProcessor:
         if idle is not None:
             if not self.is_idle and idle >= self.idle_threshold:
                 self.is_idle = True
-                events.append(self._event(EventType.IDLE_STARTED, now - timedelta(seconds=idle), idle_seconds=round(idle, 1)))
+                started = now - timedelta(seconds=idle)
+                if self._last_emitted and started < self._last_emitted:
+                    # input stopped before this agent started (or before the last window it
+                    # recorded): idle can't begin earlier than what we already wrote down
+                    started = self._last_emitted
+                events.append(self._event(EventType.IDLE_STARTED, started, idle_seconds=round(idle, 1)))
             elif self.is_idle and idle < self.idle_threshold:
                 self.is_idle = False
                 self._last_focus = None  # re-emit focus so the new activity has a start
@@ -101,6 +107,8 @@ class EventProcessor:
                 focus_event = self._focus_event(window, now)
                 if focus_event:
                     events.append(focus_event)
+        if events:
+            self._last_emitted = max(e.timestamp for e in events)
         return events
 
     def _focus_event(self, window: ActiveWindow, now: datetime) -> Event | None:

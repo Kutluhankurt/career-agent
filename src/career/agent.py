@@ -142,28 +142,32 @@ class Agent:
         if self.git and now - self._last_git >= self.settings.collector.git_interval:
             self._last_git = now
             self._store(self._check_git())
-        if now - self._last_rebuild >= self.settings.sessions.rebuild_interval:
-            self._rebuild_sessions()
         if now - self._last_memory >= self.settings.ai.analysis_interval * 60:
-            self._update_memory()
+            self._update_memory(use_ai=True)
+        elif now - self._last_rebuild >= self.settings.sessions.rebuild_interval:
+            # rules are cheap and local: keep sessions, projects and skills fresh for the dashboard
+            self._last_rebuild = now
+            self._update_memory(use_ai=False)
 
-    def _update_memory(self) -> None:
+    def _update_memory(self, use_ai: bool = True) -> None:
         """Analysis can call an AI and take a while: run it beside collection, one at a time."""
-        self._last_memory = time.monotonic()
+        if use_ai:
+            self._last_memory = time.monotonic()
         if self._memory_thread and self._memory_thread.is_alive():
             return
         today = utc_now().astimezone().date()
         days = [today] if today == self._memory_day else [self._memory_day, today]  # finish yesterday after midnight
-        self._memory_day = today
+        if use_ai:
+            self._memory_day = today
 
         def work() -> None:
             from career.ai import get_provider
             from career.career.memory import MemoryEngine
 
             try:
-                engine = MemoryEngine(self.db, self.settings, get_provider(self.settings.ai))
+                engine = MemoryEngine(self.db, self.settings, get_provider(self.settings.ai) if use_ai else None)
                 for day in days:
-                    result = engine.update_day(day, open_until=utc_now() if day == today else None)
+                    result = engine.update_day(day, open_until=utc_now() if day == today else None, use_ai=use_ai)
                     log.info("Career Memory updated for %s: %s sessions, %s analyzed (%s by AI), %s to review",
                              day, result.sessions, result.analyzed, result.ai_analyzed, result.review_count)
             except Exception:  # noqa: BLE001

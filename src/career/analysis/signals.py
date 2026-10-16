@@ -25,6 +25,8 @@ _EDITOR_SUFFIXES = {"visual studio code", "code - insiders", "cursor", "vscodium
 _JETBRAINS_APPS = {"PyCharm", "IntelliJ IDEA", "WebStorm", "CLion", "GoLand", "Rider"}
 # "user@host: ~/projects/supervisor"  or  "~/projects/supervisor — zsh"
 _TERMINAL_PATH_RE = re.compile(r"(?:^|[:\s])((?:~|/|[A-Za-z]:\\)[^\s:]*)")
+# "user@host: <path>" puts the whole rest of the title in the path, spaces included
+_PROMPT_PATH_RE = re.compile(r"^[\w.-]+@[\w.-]+:\s*((?:~|/|[A-Za-z]:\\)[^:]*?)\s*$")
 _REMOTE_SUFFIX_RE = re.compile(r"\s*\[(?:SSH|WSL|Dev Container|Codespaces)[^\]]*\]\s*$", re.IGNORECASE)
 
 
@@ -96,7 +98,8 @@ def extract_workspace(application: str | None, title: str) -> str | None:
         parts = [p for p in _TITLE_SPLIT_RE.split(title) if p]
         return _clean_workspace(parts[0]) if len(parts) >= 2 else None
     if application == "Terminal":
-        match = _TERMINAL_PATH_RE.search(title)
+        prompt = _PROMPT_PATH_RE.match(title)
+        match = prompt or _TERMINAL_PATH_RE.search(title)
         if match:
             raw = match.group(1).rstrip("/\\")
             path = PureWindowsPath(raw) if "\\" in raw else PurePosixPath(raw)
